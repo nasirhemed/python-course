@@ -4,4 +4,4 @@ This website will contain all the slides for the course: Python for High School
 
 ## Lecture Slides
 
-- [Intro](/python-course/01-intro)
+- [Intro](https://nasirhemed.github.io/python-course/01-intro/#1)
