@@ -112,6 +112,9 @@ name: course
 
 ## Links we will be referring to
 
+- [Course Website](https://nasirhemed.github.io/python-intro/)
+    - Lecture Slides
+    - Additional Notes
 - [Google Classroom](https://classroom.google.com/c/MjYyNTU1MDYyMDU1)
   - Announcements
   - Grades
