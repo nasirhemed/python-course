@@ -127,9 +127,8 @@ name: course
   - Announcements
   - Grades
   - Assignemnts
-- [Wing IDE](https://wingware.com/)
-  - Install python editing software
-  - Run code
+- Zoom Lecture
+  - Lecture Sessions
 - and other links...
 
 ---
