@@ -24,11 +24,19 @@ name: computer-programming
 
 # What is Computer Programming?
 
+--
+
 - Series of Instructions 
   - Like a recipe or manual
+
+--
+
 - Why not just use English Instructions?
   - Computers are dumb
   - There are only limited set of instructions
+
+--
+
 - Language that is clear and concise
 
 Computers are kinda dumb. But at least they are obedient
@@ -112,7 +120,7 @@ name: course
 
 ## Links we will be referring to
 
-- [Course Website](https://nasirhemed.github.io/python-intro/)
+- [Course Website](https://nasirhemed.github.io/python-course/)
     - Lecture Slides
     - Additional Notes
 - [Google Classroom](https://classroom.google.com/c/MjYyNTU1MDYyMDU1)
@@ -129,8 +137,7 @@ name: programming
 # Let's get started with programming
 
 ```python
-if __name__ == '__main__':
-    print("Hello World")
+print("Hello World!")
 ```
 
 - Printing things out: `print("Hello World")`
