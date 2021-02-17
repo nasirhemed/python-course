@@ -123,7 +123,7 @@ name: course
 - [Course Website](https://nasirhemed.github.io/python-course/)
     - Lecture Slides
     - Additional Notes
-- [Google Classroom](https://classroom.google.com/c/MjYyNTU1MDYyMDU1)
+- [Google Classroom]()
   - Announcements
   - Grades
   - Assignemnts
