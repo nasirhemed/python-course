@@ -15,12 +15,16 @@ revealOptions:
 ## Agenda
 
 - [Course Updates](#/2)
+- [Loops and Iteration](#/3)
+  - [Motivation](#/4)
+  - [While Loops](#/7)
+  - [Abbreviated Assignments](#/10)
+  - [Break Statements](#/11)
 --- 
 
 ## Course Updates
 - [Google Classroom](#)
-- Syllabus and Marking updated
-- Assignment to be released next week
+  - Make sure you submit your exercises!
 
 ---
 ## Loops and Iteration
@@ -31,8 +35,9 @@ revealOptions:
 
 We often use computers to do repeated tasks.
 
-- Wake up at 8 AM everyday
-- ...
+- Alarm at 8 AM everyday
+- Turning on the computer
+- Logging in and out
 
 Repeated exectuion of statements is called iteration.
 
