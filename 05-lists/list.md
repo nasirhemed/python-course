@@ -8,8 +8,9 @@ revealOptions:
     transition: 'fade'
 ---
 
-# Lists
-
+## Intro to Python 
+### Lists
+#### Nasir Hemed
 <next>
 
 ### What are lists ? 
