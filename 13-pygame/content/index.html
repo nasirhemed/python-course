@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>PyGame</title>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+
+## Intro to Python 
+### PyGame
+#### Nasir Hemed
+
+</script></section><section  data-markdown><script type="text/template">
+
+### PyGame
+
+- PyGame is a package a library that provides us a way to implement video games
+- It is not installed by default, so we will have to install it
+- We can install it using the command: `pip install pygame`
+- ..... Or in there is a simpler way in PyCharm
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+### The Game Loop 
+
+- The structure of games usually have a pattern
+  - Poll for user input (pressing buttons/keyboard)
+  - Process it (Move character)
+  - Update the display 
+  - Show it to the user 
+  
+<img data-src="https://gameprogrammingpatterns.com/images/game-loop-simple.png">
+
+</script></section><section data-markdown><script type="text/template">
+
+- At the beginning we have to setup the game 
+- Once we setup, we go into this constant loop 
+  - Get the user inputs
+  - Update the elements of the game 
+  - Draw the game on the screen 
+  - Show the screen to the user 
+- If user quits, close down the game
+
+<img data-src="http://openbookproject.net/thinkcs/python/english3e/_images/pygame_structure.png">
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+### Example
+
+Here's an example of a simple game 
+
+```python
+import pygame
+
+def main():
+    """ Set up the game and run the main game loop """
+    pygame.init()      # Prepare the pygame module for use
+    surface_sz = 480   # Desired physical surface size, in pixels.
+
+    # Create surface of (width, height), and its window.
+    main_surface = pygame.display.set_mode((surface_sz, surface_sz))
+
+    # Set up some data to describe a small rectangle and its color
+    small_rect = (300, 200, 150, 90)
+    some_color = (255, 0, 0)        # A color is a mix of (Red, Green, Blue)
+
+    while True:
+        ev = pygame.event.poll()    # Look for any event
+        if ev.type == pygame.QUIT:  # Window close button clicked?
+            break                   #   ... leave game loop
+
+        # Update your game objects and data structures here...
+
+        # We draw everything from scratch on each frame.
+        # So first fill everything with the background color
+        main_surface.fill((0, 200, 255))
+
+        # Overpaint a smaller rectangle on the main surface
+        main_surface.fill(some_color, small_rect)
+
+        # Now the surface is ready, tell pygame to display it!
+        pygame.display.flip()
+
+    pygame.quit()     # Once we leave the loop, close the window.
+
+main()
+```
+
+This is too much info.... Let's break it down
+
+</script></section><section data-markdown><script type="text/template">
+
+### Setup 
+
+- In order to set up the game, we have to initialize some things
+  - `pygame.init()` prepares the game for us
+  - We need to create a surface/screen
+  - Set up our elements if needed to show the character
+
+```python
+    pygame.init()      # Prepare the pygame module for use
+    surface_sz = 480   # Desired physical surface size, in pixels.
+
+    # Create surface of (width, height), and its window.
+    main_surface = pygame.display.set_mode((surface_sz, surface_sz))
+
+    # Set up some data to describe a small rectangle and its color
+    small_rect = (300, 200, 150, 90)
+    some_color = (255, 0, 0)        # A color is a mix of (Red, Green, Blue)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### Game Loop 
+
+- This is a while loop (Game Loop Duh...)
+  - Get the input from the user
+  - Process the event based on what the event is 
+  - Draw everything that you want to show 
+  - Show the screen to the user
+
+```python
+while True:
+        ev = pygame.event.poll()    # Look for any event
+        if ev.type == pygame.QUIT:  # Window close button clicked?
+            break                   #   ... leave game loop
+
+        # Update your game objects and data structures here...
+
+        # We draw everything from scratch on each frame.
+        # So first fill everything with the background color
+        main_surface.fill((0, 200, 255))
+        # Overpaint a smaller rectangle on the main surface
+        main_surface.fill(some_color, small_rect)
+
+        # Now the surface is ready, tell pygame to display it!
+        pygame.display.flip()
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Displaying Images on a Game
+
+- To draw an image on the surface, we first load the image 
+```python
+ball = pygame.image.load("ball.png")
+```
+- Once we load the image, we **blit** the image
+```python
+# blit means to copy pixels to the surface 
+main_surface.blit(ball, (100, 120))
+```
+
+
+</script></section><section data-markdown><script type="text/template"> 
+
+### Displaying Text on a Game
+
+- To display the image, we need to first have a `font` object 
+```python
+# Instantiate 16 point Courier font to draw text.
+my_font = pygame.font.SysFont("Courier", 16)
+```
+- Within the loop, we us the font to create an image of the text 
+```python
+the_text = my_font.render("Hello, world!", True, (0,0,0))
+```
+- Once, we have the text, we **blit** the text 
+```python
+main_surface.blit(the_text, (10, 10))
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Full Code 
+
+```python
+import pygame
+import time
+
+def main():
+
+    pygame.init()    # Prepare the PyGame module for use
+    main_surface = pygame.display.set_mode((480, 240))
+
+    # Load an image to draw. Substitute your own.
+    # PyGame handles gif, jpg, png, etc. image types.
+    ball = pygame.image.load("ball.png")
+
+    # Create a font for rendering text
+    my_font = pygame.font.SysFont("Courier", 16)
+
+    frame_count = 0
+    frame_rate = 0
+    t0 = time.clock()
+
+    while True:
+
+        # Look for an event from keyboard, mouse, joystick, etc.
+        ev = pygame.event.poll()
+        if ev.type == pygame.QUIT:   # Window close button clicked?
+            break                    # Leave game loop
+
+        # Do other bits of logic for the game here
+        frame_count += 1
+        if frame_count % 500 == 0:
+            t1 = time.clock()
+            frame_rate = 500 / (t1-t0)
+            t0 = t1
+
+        # Completely redraw the surface, starting with background
+        main_surface.fill((0, 200, 255))
+
+        # Put a red rectangle somewhere on the surface
+        main_surface.fill((255,0,0), (300, 100, 150, 90))
+
+        # Copy our image to the surface, at this (x,y) posn
+        main_surface.blit(ball, (100, 120))
+
+        # Make a new surface with an image of the text
+        the_text = my_font.render("Frame = {0},  rate = {1:.2f} fps"
+                  .format(frame_count, frame_rate), True, (0,0,0))
+        # Copy the text surface to the main surface
+        main_surface.blit(the_text, (10, 10))
+
+        # Now that everything is drawn, put it on display!
+        pygame.display.flip()
+
+    pygame.quit()
+
+
+main()
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Drawing a Chess Board with Queens
+
+- Let's try to draw a chess board 
+- We will create a module that just updates and draws the board
+- First let us draw the background (square pieces)
+
+</script></section><section data-markdown><script type="text/template">
+
+### Setup Code 
+
+```python
+def draw_board(the_board):
+  
+  pygame.init()
+  colors = [(255, 255, 255), (0, 0, 0)] # These are the square colours 
+
+  n = len(the_board)
+  surface_sz = 480
+  sq_sz = surface_sz // n
+  surface_sz = n * sq_sz
+
+
+  surface = pygame.display.set_mod((surface_sz, surface_sz))
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### Game Loop: Background 
+
+- Here is the idea for drawing the background
+
+```python
+# Draw a fresh background (a blank chess board)
+for row in range(n):
+  c_indx = row % 2 # Black or White (0 or 1)
+  for col in range(n):
+    the_square = (col * sq_sz, row * sq_sz, sq_sz, sq_sz)
+    surface.fill(colors[c_indx], the_square)
+    c_indx = (c_indx + 1) % 2
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### Game Loop: Pieces
+
+- Now let us draw the queen:
+
+```python
+for col, row in the_board:
+  # To make sure the ball is in the middle
+  ball_offset = (sq_sz - ball.get_width()) // 2 
+
+  surface.blit(ball, 
+    (coll * sq_sz + ball_offset, row * sq_sz + ball_offset))
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### Full code
+
+```python
+import pygame
+
+def draw_board(the_board):
+    """ Draw a chess board with queens, as determined by the the_board. """
+
+    pygame.init()
+    colors = [(255,0,0), (0,0,0)]    # Set up colors [red, black]
+
+    n = len(the_board)         # This is an NxN chess board.
+    surface_sz = 480           # Proposed physical surface size.
+    sq_sz = surface_sz // n    # sq_sz is length of a square.
+    surface_sz = n * sq_sz     # Adjust to exactly fit n squares.
+
+    # Create the surface of (width, height), and its window.
+    surface = pygame.display.set_mode((surface_sz, surface_sz))
+
+    ball = pygame.image.load("ball.png")
+
+    # Use an extra offset to centre the ball in its square.
+    # If the square is too small, offset becomes negative,
+    #   but it will still be centered :-)
+    ball_offset = (sq_sz-ball.get_width()) // 2
+
+    while True:
+
+        # Look for an event from keyboard, mouse, etc.
+        ev = pygame.event.poll()
+        if ev.type == pygame.QUIT:
+            break;
+
+        # Draw a fresh background (a blank chess board)
+        for row in range(n):           # Draw each row of the board.
+            c_indx = row % 2           # Alternate starting color
+            for col in range(n):       # Run through cols drawing squares
+                the_square = (col*sq_sz, row*sq_sz, sq_sz, sq_sz)
+                surface.fill(colors[c_indx], the_square)
+                # Now flip the color index for the next square
+                c_indx = (c_indx + 1) % 2
+
+        # Now that squares are drawn, draw the queens.
+        for (col, row) in enumerate(the_board):
+          surface.blit(ball,
+                   (col*sq_sz+ball_offset,row*sq_sz+ball_offset))
+
+        pygame.display.flip()
+
+
+    pygame.quit()
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Sprites 
+
+- So far, we just showed how to draw something 
+  - But our game didn't move much 
+  - Usually there are moving elements in a game 
+- Sprite is an object that can move about in game, has its own state
+- Let us add a sprite to drop a bouncing queen 
+
+</script></section><section data-markdown><script type="text/template">
+
+- We use Object Oriented Programming for Sprites 
+  - Store information about the position, velocity, ...
+- Let us create a Queen Sprite 
+  - We need to have a method to call update
+  - We need to have a method to call draw
+
+
+```python
+class QueenSprite:
+
+    def __init__(self, img, target_posn):
+        """ Create and initialize a queen for this
+            target position on the board
+        """
+        self.image = img
+        self.target_posn = target_posn
+        self.posn = target_posn
+
+    def update(self):
+        return                # Do nothing for the moment.
+
+    def draw(self, target_surface):
+        target_surface.blit(self.image, self.posn)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+- Let us now update our `draw_board` function to include the `QueenSprite`
+  - We will also have a list of sprites 
+
+```python
+    all_sprites = []      # Keep a list of all sprites in the game
+
+    # Create a sprite object for each queen, and populate our list.
+    for (col, row) in enumerate(the_board):
+        a_queen = QueenSprite(ball,
+                   (col*sq_sz+ball_offset, row*sq_sz+ball_offset))
+        all_sprites.append(a_queen)
+
+    while True:
+        # Look for an event from keyboard, mouse, etc.
+        ev = pygame.event.poll()
+        if ev.type == pygame.QUIT:
+            break;
+
+        # Ask every sprite to update itself.
+        for sprite in all_sprites:
+            sprite.update()
+
+        # Draw a fresh background (a blank chess board)
+        # ... same as before ...
+
+        # Ask every sprite to draw itself.
+        for sprite in all_sprites:
+            sprite.draw(surface)
+
+        pygame.display.flip()
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Adding Gravity
+
+- Now let us add some gravity
+    - Each Queen will have a velocity, direction
+    - So everytime we update, we change the position based on the velocity
+    - We also have to update velocity since gravity is acceleration
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Code for Gravity
+
+```python
+gravity = 0.0001
+
+class QueenSprite:
+
+    def __init__(self, img, target_posn):
+        self.image = img
+        self.target_posn = target_posn
+        (x, y) = target_posn
+        self.posn = (x, 0)     # Start ball at top of its column
+        self.y_velocity = 0    #    with zero initial velocity
+
+    def update(self):
+        self.y_velocity += gravity       # Gravity changes velocity
+        (x, y) = self.posn
+        new_y_pos = y + self.y_velocity  # Velocity moves the ball
+        self.posn = (x, new_y_pos)       #   to this new position.
+
+    def draw(self, target_surface):      # Same as before.
+        target_surface.blit(self.image, self.posn)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Adding Bounce
+
+- Now, we want the ball to bounce since whenever we drop a ball it bounces
+    - When something bounces, it goes up
+    - So we can make the velocity negative
+    - But then because of gravity, it goes back down
+
+
+</script></section><section data-markdown><script type="text/template">
+
+#### The code
+
+```python
+def update(self):
+    self.y_velocity += gravity
+    (x, y) = self.posn
+    new_y_pos = y + self.y_velocity
+    (target_x, target_y) = self.target_posn   # Unpack the position
+    dist_to_go = target_y - new_y_pos         # How far to our floor?
+
+    if dist_to_go < 0:                        # Are we under floor?
+        self.y_velocity = -0.65 * self.y_velocity     # Bounce
+        new_y_pos = target_y + dist_to_go     # Move back above floor
+
+    self.posn = (x, new_y_pos)                # Set our new position.
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Events
+
+- Recall one of the things that we do during the game loop
+    - Getting events from the user
+    - We need to do something with these events
+    - So far, we only dealt with quit
+- Let us see what type of events are there 
+
+</script></section><section data-markdown><script type="text/template">
+
+We will add these line to our code 
+
+```python
+if ev.type != pygame.NOEVENT:   # Only print if it is interesting!
+    print(ev)
+```
+
+This is the output we get 
+
+
+```python
+<Event(17-VideoExpose {})>
+<Event(1-ActiveEvent {'state': 1, 'gain': 0})>
+<Event(2-KeyDown {'scancode': 57, 'key': 32, 'unicode': ' ', 'mod': 0})>
+<Event(3-KeyUp {'scancode': 57, 'key': 32, 'mod': 0})>
+<Event(2-KeyDown {'scancode': 1, 'key': 27, 'unicode': '\x1b', 'mod': 0})>
+<Event(3-KeyUp {'scancode': 1, 'key': 27, 'mod': 0})>
+...
+<Event(4-MouseMotion {'buttons': (0, 0, 0), 'pos': (323, 194), 'rel': (-3, -1)})>
+<Event(4-MouseMotion {'buttons': (0, 0, 0), 'pos': (322, 193), 'rel': (-1, -1)})>
+<Event(4-MouseMotion {'buttons': (0, 0, 0), 'pos': (321, 192), 'rel': (-1, -1)})>
+<Event(4-MouseMotion {'buttons': (0, 0, 0), 'pos': (319, 192), 'rel': (-2, 0)})>
+<Event(5-MouseButtonDown {'button': 1, 'pos': (319, 192)})>
+<Event(6-MouseButtonUp {'button': 1, 'pos': (319, 192)})>
+<Event(4-MouseMotion {'buttons': (0, 0, 0), 'pos': (319, 191), 'rel': (0, -1)})>
+<Event(5-MouseButtonDown {'button': 2, 'pos': (319, 191)})>
+<Event(5-MouseButtonDown {'button': 5, 'pos': (319, 191)})>
+<Event(6-MouseButtonUp {'button': 5, 'pos': (319, 191)})>
+<Event(6-MouseButtonUp {'button': 2, 'pos': (319, 191)})>
+<Event(5-MouseButtonDown {'button': 3, 'pos': (319, 191)})>
+<Event(6-MouseButtonUp {'button': 3, 'pos': (319, 191)})>
+ ...
+<Event(1-ActiveEvent {'state': 1, 'gain': 0})>
+<Event(12-Quit {})>
+```
+</script></section><section data-markdown><script type="text/template">
+
+- Let us change our code to change the color of the board when the user presses rgb
+
+```python
+from pygame.locals import K_r, K_g, K_b, K_ESC
+while True:
+
+    # Look for an event from keyboard, mouse, etc.
+    ev = pygame.event.poll()
+    if ev.type == pygame.QUIT:
+        break;
+    if ev.type == pygame.KEYDOWN:
+        key = ev.dict["key"]
+        if key == K_ESC:                  # On Escape key ...
+            break                      #   leave the game loop.
+        if key == K_r):
+            colors[0] = (255, 0, 0)    # Change to red + black.
+        elif key == K_g:
+            colors[0] = (0, 255, 0)    # Change to green + black.
+        elif key == K_b:
+            colors[0] = (0, 0, 255)    # Change to blue + black.
+
+    if ev.type == pygame.MOUSEBUTTONDOWN: # Mouse gone down?
+        posn_of_click = ev.dict["pos"]    # Get the coordinates.
+        print(posn_of_click)              # Just print them.
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+- How do we know if a user clicked one of the queens ?
+    - We need to add a way to see if I clicked the square of the queen
+    - Let us add a method to check if the mouseclick is inside of a queen
+
+```python
+  def contains_point(self, pt):
+      """ Return True if my sprite rectangle contains point pt """
+      (my_x, my_y) = self.posn
+      my_width = self.image.get_width()
+      my_height = self.image.get_height()
+      (x, y) = pt
+      return ( x >= my_x and x < my_x + my_width and
+               y >= my_y and y < my_y + my_height)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Now we can update the mouse click section for all sprites 
+
+
+```python
+if ev.type == pygame.MOUSEBUTTONDOWN:
+    posn_of_click = ev.dict["pos"]
+    for sprite in all_sprites:
+        if sprite.contains_point(posn_of_click):
+            sprite.handle_click()
+            break
+```
+
+And add a method called handle_click 
+
+```python
+    def handle_click(self, pt):
+        self.y_velocity += -0.3
+```</script></section></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"fade"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
