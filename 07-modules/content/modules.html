@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Modules</title>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+
+## Intro to Python 
+### Modules
+#### Nasir Hemed
+</script></section><section  data-markdown><script type="text/template">
+
+# Modules
+
+</script></section><section  data-markdown><script type="text/template">
+
+## What are modules ?
+
+- A module is a file containing python code and is intended for use in other python programs. 
+- We have used libraries such as turtle, random, string and even in your assignment!
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+### Random Numbers
+
+We often want to use random numbers in programs. Examples
+
+- Flip a coin
+- Roll a dice
+- Shuffle cards
+- To simulate a new world (minecraft)
+- Encryption/Decryption
+
+Most libraries provide a module to deal with randomness. In python, we use the `random` module
+
+</script></section><section data-markdown><script type="text/template">
+
+```python
+import random
+
+# Create a black box object that generates random numbers
+rng = random.Random()
+
+dice_throw = rng.randrange(1,7)   # Return an int, one of 1,2,3,4,5,6
+delay_in_seconds = rng.random() * 5.0
+```
+
+`randrange` method generates an integer between its lower and upper bounds
+
+The `random` method returns a floating value between 0 and 1. In other words, the value for x is s.t  $0 \le x < 1$
+
+</script></section><section data-markdown><script type="text/template">
+
+We can also `shuffle` a list. This can be used to shuffle items such as cards, ... , etc.
+
+```python
+import random
+lst = [1,2,3,4,5,6]
+random.shuffle(lst)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Testing Randomness
+
+- Using random makes it hard to test
+- Sometimes we want to make sure that our programs work
+- Use `seed` in random
+
+### Examples
+
+</script></section><section data-markdown><script type="text/template">
+
+Simulating throwing a die n times
+
+```python
+import random
+def throw_die(num):
+	rng = random.Random()
+	result = []
+	for i in range(num):
+		result.append(rng.randrange(1, 7))
+
+	return result
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Simulating shuffling a deck of cards
+
+```python
+cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'reverse', '+4', '+2', 'stop']
+rng = rng.Random()
+rng.shuffle(cards)
+cards
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Choose a random card
+
+```python
+cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'reverse', '+4', '+2', 'stop']
+rng = rng.Random()
+card = rng.choice(cards)
+card
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Time Module
+
+- We want fast and efficient programs
+- But how do we know a program is fast ?
+  - We time how long it takes to run!
+  - One way of doing this is using the `time` module
+
+</script></section><section data-markdown><script type="text/template">
+
+The `time` module has a function called `time()` that returns the current time in seconds. 
+
+So the idea here is:
+
+```python
+start = time.time()
+# Run your function
+end = time.time()
+time_take = end - start
+```
+</script></section><section data-markdown><script type="text/template">
+
+
+### Example:
+
+```python
+import time
+
+def do_my_sum(xs):
+    sum = 0
+    for v in xs:
+        sum += v
+    return sum
+
+sz = 10000000        # Lets have 10 million elements in the list
+testdata = range(sz)
+
+t0 = time.clock()
+my_result = do_my_sum(testdata)
+t1 = time.clock()
+print("my_result    = {0} (time taken = {1:.4f} seconds)"
+        .format(my_result, t1-t0))
+
+t2 = time.clock()
+their_result = sum(testdata)
+t3 = time.clock()
+print("their_result = {0} (time taken = {1:.4f} seconds)"
+        .format(their_result, t3-t2))
+```
+</script></section></section><section  data-markdown><script type="text/template">
+
+### Other modules
+
+There are a ton of other modules we can play with. Each has their own purpose. Some examples include:
+
+- math
+- request
+- sys
+- turtle
+
+</script></section><section ><section data-markdown><script type="text/template"> 
+
+### Creating your own modules
+
+- How do we create our own modules ?
+- Sometimes we have multiple files of code
+  - How do we use code from another file ?
+
+All we need to do to create our own modules is to save our file with a `.py` extension.
+
+</script></section><section data-markdown><script type="text/template">
+
+For example, if we have a file called `[seqtools.py](http://seqtools.py)` and we have a function:
+
+```python
+def remove_at(pos, seq):
+    return seq[:pos] + seq[pos+1:]
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+We can use this by importing
+
+```python
+>>> import seqtools
+>>> s = "A string!"
+>>> seqtools.remove_at(4, s)
+'A sting!'
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+### Ways of importing files
+
+There are three different ways of importing files
+
+</script></section><section data-markdown><script type="text/template">
+
+#### Just use `import`
+
+```python
+import math
+x = math.sqrt(10)
+```
+
+Here, we import the entire math module. Sometimes, all we need is just one function not all the functions. For this, we can use the second method
+
+</script></section><section data-markdown><script type="text/template">
+
+#### `from ... import ...`
+
+```python
+from math import sqrt   # Import all the identifiers from math,
+                     #   adding them to the current namespace.
+x = sqrt(10)         # Use them without qualification.
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+#### `import ... as ...`
+
+Sometimes, we can import a module under a different name. For example if the module name is too long, we can use this
+
+```python
+import math as m
+x = m.sqrt(10)
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## Questions ?</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"fade"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
