@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Dictionaries</title>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+
+## Intro to Python 
+### Modules
+#### Nasir Hemed
+</script></section><section  data-markdown><script type="text/template">
+
+
+# Dictionaries
+
+</script></section><section ><section data-markdown><script type="text/template">
+
+## Compound Data Types
+
+- Recall compound data types
+  - Lists
+  - Strings
+  - Tuples
+
+But what do they have in common ?
+
+</script></section><section data-markdown><script type="text/template">
+
+- There is order
+- They are sequence types
+  -  Use index to access value they contain
+
+```python
+
+l = [1,2,3]
+s = "123"
+t = (1, 2, 3)
+
+s[1]
+t[1]
+l[1]
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## What are dictionaries ?
+
+- Dictionaries are compound datatypes 
+  - Mapping data type
+  - Map **keys** to **values**
+
+
+- key1 → [1,2,4,5]
+- key2 → "string"
+- key3 → "anything"
+
+
+</script></section><section data-markdown><script type="text/template">
+
+To create a dictionary in python, we use the curly braces to define one
+
+```python
+>>> eng2sp = {} # Create a dictionary named eng2sp
+>>> eng2sp["one"] = "uno" # key is one, value is uno
+>>> eng2sp["two"] = "dos" # key is two, value is dos
+>>> eng2sp
+{"two": "dos", "one": "uno"}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Another way we can create dictionary is with the following:
+
+```python
+>>> eng2sp = {"one": "uno", "two": "dos", "three": "tres"}
+>>> eng2sp
+{"two": "dos", "one": "uno"}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+To access a value for a certain key, we use "indexing". But this time instead of specifying the position, we specify the "key"
+
+```python
+>>> eng2sp = {"one": "uno", "two": "dos", "three": "tres"}
+>>> eng2sp["one"]
+"uno"
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Dictionary operations
+
+- Just like lists, dictionaries have operations
+  - Add
+  - Delete
+  - Update
+
+</script></section><section data-markdown><script type="text/template">
+
+Let's say we have a dictionary that has a stock of fruits
+
+
+```python
+>>> inventory = {"apples": 430, "bananas": 312, "oranges": 525, "pears": 217}
+>>> print(inventory)
+{'pears': 217, 'apples': 430, 'oranges': 525, 'bananas': 312}
+```
+
+
+### Add
+Let's say we want to add a new type of fruit. We want to add strawberries
+
+```python
+>>> inventory["strawberries"] = 50
+>>> print(inventory)
+{'pears': 217, 'apples': 430, 'oranges': 525, 'bananas': 312, 'strawberry': 50}
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### Update 
+
+Let's say someone buys some fruits. Now we have to update it
+
+```python
+# Someone bought 100 apples
+>>> inventory["apples"] = inventory["apples"] - 100
+>>> print(inventory)
+{'pears': 217, 'apples': 330, 'oranges': 525, 'bananas': 312}
+```
+
+Notice that updating this is quite similar to updating elements in the list. This is becuase dictionaries are mutable
+
+</script></section><section data-markdown><script type="text/template">
+
+### Delete
+
+Let's say someone bought all the pears. So no we are no longer selling pears. 
+
+To delete a key:value pair, we use the `del` keyword
+
+```python
+>>> del inventory["pears"]
+>>> print(inventory)
+{'apples': 330, 'oranges': 525, 'bananas': 312}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Let's say we got new shipment of bananas
+
+```python
+>>> inventory["bananas"] += 200
+>>> print(inventory)
+{'pears': 0, 'apples': 330, 'oranges': 525, 'bananas': 512}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+The `len` function checks how many key:value pairs are there in the dictionary. So we can use it to check how many types of fruits we are selling
+
+```python
+>>> len(inventory)
+4
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+## Dictionary Methods
+
+- Dictionaries have a lot of useful methods. 
+
+</script></section><section data-markdown><script type="text/template">
+
+### `keys` method
+
+The `keys` method returns a "collection" of the keys that were defined in the dictionary. We can use it to loop throguh the elements of the dictionary  
+
+```python
+for k in eng2sp.keys():   # The order of the k's is not defined
+   print("Got key", k, "which maps to value", eng2sp[k])
+
+ks = list(eng2sp.keys())
+print(ks)
+```
+
+Not that the order of the keys do not matter. Since dictionary is not a sequence of elements
+
+</script></section><section data-markdown><script type="text/template">
+
+### `values` method
+
+The `values` method returns a collection of values
+
+```python
+>>> list(eng2sp.values())
+['tres', 'dos', 'uno']
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### `items` method
+
+The `items` method returns a tuple where both key and value are there
+
+```python
+>>> list(eng2sp.items())
+[('three', 'tres'), ('two', 'dos'), ('one', 'uno')]
+```
+
+We can use the items method for our loops as well
+
+```python
+for (k,v) in eng2sp.items():
+    print("Got",k,"that maps to",v)
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+### `in` and `not in`
+To check if a key is inside the dictionary, we use `in` and `not in`
+
+```python
+>>> "one" in eng2sp
+True
+>>> "six" in eng2sp
+False
+>>> "tres" in eng2sp    # Note that 'in' tests keys, not values.
+False
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+This can be useful if we want to avoid errors
+
+```python
+>>> eng2esp["dog"]
+Traceback (most recent call last):
+  ...
+KeyError: 'dog'
+```
+
+```python
+if "dog" in eng2esp:
+	print(eng2esp["dog"])
+
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Aliasing and Copying
+
+Recall what we discussed about mutability (lists and strings)
+
+We are able to change values inside the list but we have to be careful about assigning
+
+```python
+a = [1,2,3,4]
+b = a
+a[0] = 3
+b # What is the value of b ?
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+Dictionaries are mutlable too. So we need to be careful whenever we assign again.
+
+```python
+>>> opposites = {"up": "down", "right": "wrong", "yes": "no"}
+>>> alias = opposites
+>>> alias["right"] = "left"
+>>> opposites
+{"up": "down", "right": "left", "yes": "no"}
+```
+
+</script></section><section data-markdown><script type="text/template"> 
+
+To fix this: 
+
+```python
+>>> opposites = {"up": "down", "right": "wrong", "yes": "no"}
+>>> alias = opposites.copy()
+>>> alias["right"] = "left"
+>>> opposites
+{"up": "down", "right": "wrong", "yes": "no"}
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+## Counting the number of letters
+
+We can use dictionaries to count the occurrences of letters in a string. Consider the following problem:
+
+Count the number of occurences of letter "e"
+
+```python
+count = 0
+for letter in word:
+	if letter == "e":
+		count += 1
+
+return count
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+What if we want to count the occurrences of all letters? We need some table for that right ? We can use a dictionary!
+
+```python
+>>> letter_counts = {}
+>>> for letter in "Mississippi":
+...     letter_counts[letter] = letter_counts.get(letter, 0) + 1
+...
+>>> letter_counts
+{'M': 1, 's': 4, 'p': 2, 'i': 4}
+```
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+## Questions ?</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"fade"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
